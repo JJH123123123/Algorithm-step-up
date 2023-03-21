@@ -1,3 +1,5 @@
+# 저번에 푼거랑 비슷해서 응용해보려했는데 remove말고는 방법이 안떠올라서
+# 저렇게 했더니 시간초과가 나네요
 N=int(input())
 
 room=[list(map(int,input().split())) for i in range(N)]
@@ -26,3 +28,4 @@ while room:
     cnt+=1
 
 print(cnt)
+
