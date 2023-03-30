@@ -10,7 +10,6 @@ int abs(int & a){
     return -a;
 }
 
-
 struct POST{
     int s;
     int e;
@@ -23,9 +22,7 @@ bool comp(POST &a, POST&b){
     }
     return a.e < b.e;
 }
-
 vector<POST> vec;
-deque<POST> deq;
 
 int store[30001];
 
@@ -59,10 +56,7 @@ int main(void){
             store[j] += tmp;
         }
     
-        // for(int i = Mi;i<=M;i++)
-        //     cout << store[i] << " ";
-        // cout << " " << vec[idx].nums << " " << index << '\n';
-        // cout << vec[idx].s << " " << vec[idx].e << " " << vec[idx].nums << '\n';
     }
     cout << cnt << '\n';
 }
+
