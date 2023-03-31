@@ -1,0 +1,39 @@
+import numpy as np
+
+N = int(input())
+
+line = []
+count = 0
+last_month = 3
+last_day = 1
+
+for i in range(0,N):
+    line.append(list(map(int, input().split())))
+
+line = sorted(line, key=lambda x:(-x[2], -x[3])) #마감일 느린 순서대로
+
+print(line)
+
+i = 0
+while(True):
+    if i >= len(line):
+        break
+
+    if (line[i][2] < last_month) | (line[i][2] == last_month and line[i][3] <= last_day) :
+        line = np.delete(line,i,axis = 0)
+        continue
+
+    if (line[i][2] > last_month) | (line[i][2] == last_month and line[i][3] > last_day) : #마감일이 지금 설정된 마감일보다 느려
+        if (line[i][0] < last_month) | (line[i][0] == last_month and line[i][1] <= last_day)  : #시작일은 마감일보다 빨라
+            last_month = line[i][2]
+            last_day = line[i][3]
+            line = np.delete(line,i,axis = 0)
+            count += 1
+            if (last_month > 7) | (last_month == 7 and last_day == 31): #만약 끝내도 된다면 끝~
+                break
+            i = 0 #처음부터 다시 보기
+            print(line)
+    
+    i += 1
+    
+print(count)
