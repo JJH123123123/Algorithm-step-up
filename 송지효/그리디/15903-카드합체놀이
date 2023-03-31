@@ -1,0 +1,15 @@
+N, M = map(int, input().split())
+
+num = list(map(int,input().split()))
+
+for i in range(M):
+    num.sort()
+    sum = num[0] + num[1]
+    num[0] = sum
+    num[1] = sum
+
+result = 0
+for i in range(N):
+    result += num[i]
+
+print(result)
