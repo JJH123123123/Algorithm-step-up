@@ -1,0 +1,46 @@
+N, K = map(int, input().split())
+
+num = list(map(int,input().split()))
+
+use = [0]*(K+1) #사용하게 될 가전제품 각각의 개수 초기화
+
+for i in num: #리스트에서 받은 가전제품 종류 
+    try: use[i] += 1
+    except: use[i]=1
+
+print(use)
+
+use = [i for i in use if use[i] != 0]
+use.sort(reverse=True)
+
+print(use)
+
+count = 0
+
+
+while(True) :
+    if len(use) == 0: #더이상 고려할 배열 요소들이 없을 때 빠져나오삼
+        break
+
+    m  = 100 #일단 들어갈 수 있는 수에서 가장 큰 수로 설정
+
+    if len(use) < N:
+        N = len(use) #남아 있는 리스트 길이로 갱신
+    
+    for i in range(N):
+        if use[i] < m : #최소값 갱신 과정 (앞에서부터 N개 보면서)
+            m = use[i]
+    print(m)
+
+    for i in range(N): #앞에서부터 N개 모두에게 최소값 빼주기
+        use[i] -= m
+        if use[i] == 0 : #여기는 교체해야 하는 곳이니 갱신하기
+            count += 1
+
+    print("thing")
+    print(use)
+
+    use = [i for i in use if use[i] != 0]  #0으로 된 것들은 모두 제거해주기
+
+    print(use)
+print(count)
