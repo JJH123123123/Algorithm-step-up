@@ -1,0 +1,52 @@
+import numpy as np
+import operator
+
+N = int(input())
+classlist = []
+for i in range(N):
+    classlist.append(list(map(int, input().split())))
+
+print(classlist)
+    
+classroom = 0
+
+
+while(N != 0): #한 교실에 대한 강의 등록하기 과정 시작! (더 이상 등록할 강의수가 없어질 때까지 할거임)
+    end_time = 0
+    start_time = 0
+    
+    before_lectures = 0
+    lectures = 0
+    while(True) :
+        classlist = sorted(classlist, key=lambda x:x[1]) #중간에 삭제된 것들도 있어서 다시 처음부터 재배열 시켜줘야 함
+        
+        for i in range(N): #등록할 강의 찾기
+            #강의 하나 등록하기
+            if classlist[i][0] >= end_time: #종료시간이 가장 빠른 것들 중에서 등록 가능한 것은 일단 먼저 등록해두기
+                start_time = classlist[i][0]
+                turn = i
+                #뒤에 종료 시간이 같은 것들이 또 있나 확인하기
+                for j in range(i+1,N):
+                    if classlist[i][1] == classlist[j][1] & classlist[i][0] > classlist[j][0] & classlist[j][0] >= end_time: 
+                        #현재 등록하려는 강의의 종료시간과 같은 것이 있는 거 중에서 시작시간이 지금보다 더 빠른 게 있다면 체인지
+                        start_time = classlist[j][0]
+                        turn = j
+                
+                end_time = classlist[turn][1]
+
+                classlist = np.delete(classlist,turn,axis=0) #중복된 게 있어서 바뀌었다면 turn도 바뀌었을 거임. 아니면 처음에 설정한 그대로일 거고
+
+                before_lectures = lectures
+                lectures += 1 #어쨋든 강의는 등록하였다!!
+                N -= 1 #등록할 수 있는 강의 개수가 줄어드는 거임.
+                break
+        
+            before_lectures = lectures #만약 등록할 강의를 발견했다면 if문에서 이미 구별이 되어서 for문을 break 했을 거임
+
+        if (lectures == before_lectures) : # 이전에 했던 못했던 더 이상 강의 등록 할 게 없을 때
+            break
+    
+    if (lectures > 0) : #동록을 하나라도 한 채로 나왔으면 한 교실은 어떻게든 사용되는 거니 +1
+        classroom += 1
+
+print(classroom)

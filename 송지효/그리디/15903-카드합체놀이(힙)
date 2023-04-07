@@ -1,0 +1,24 @@
+from heapq import heappush, heappop, heapify
+
+N, M = map(int, input().split())
+
+nums = list(map(int,input().split()))
+
+heapify(nums)
+
+sorted_nums = []
+
+while nums:
+    sorted_nums.append(heappop(nums))
+
+for i in range(M):
+    sum = heappop(sorted_nums) + heappop(sorted_nums)
+    heappush(sorted_nums, sum)
+    heappush(sorted_nums, sum)
+
+result = 0
+for i in range(N):
+    result += sorted_nums[i]
+
+
+print(result)
